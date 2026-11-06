@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body { @apply bg-gym-black font-sans text-white antialiased; }
+}
+
+@layer components {
+  .skew-card { clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%); }
+  /* Glow + micro-scale: solo transform/filter => GPU compositing */
+  .neon-hover { @apply transition-[transform,filter] duration-300 will-change-transform; }
+  .neon-hover:hover { transform: scale(1.03); filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.65)); }
+  .btn-gold {
+    @apply inline-flex items-center gap-2 rounded-full bg-gym-yellow px-7 py-3 font-display text-lg font-bold italic text-black transition duration-300 hover:scale-105 hover:shadow-neon;
+  }
+  .btn-outline {
+    @apply inline-flex items-center gap-2 rounded-full border border-gym-yellow px-6 py-2.5 font-display text-base font-semibold italic text-gym-yellow transition hover:bg-gym-yellow hover:text-black;
+  }
+  .eyebrow { @apply font-display text-base font-semibold italic text-gym-yellow; }
+  .h2 { @apply font-display text-4xl font-black italic uppercase leading-[0.95] sm:text-5xl; }
+}
+
+/* Estado inicial de las animaciones GSAP (evita parpadeo antes de hidratar) */
+[data-reveal] { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; }
+  html { scroll-behavior: auto; }
+}
